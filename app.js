@@ -78,7 +78,7 @@ function mostrarPregunta(idx) {
     document.getElementById('progreso-fill').style.width = porcentaje + '%';
 
     // Opciones
-    const letras = ['A', 'B', 'C'];
+    const letras = ['A', 'B', 'C', 'D'];
     const contenedor = document.getElementById('opciones-lista');
     contenedor.innerHTML = '';
 
@@ -318,7 +318,7 @@ function verRevisión() {
             badgeTexto = '✗ Incorrecta';
         }
 
-        const letras = ['A', 'B', 'C'];
+        const letras = ['A', 'B', 'C', 'D'];
         let opcionesHTML = pregunta.opciones.map((op, j) => {
             let claseOp = '';
             if (j === pregunta.correcta) claseOp = 'correcta';
@@ -401,7 +401,7 @@ function renderizarEstudio(preguntas) {
 
     document.getElementById('estudio-counter').textContent = `${preguntas.length} pregunta${preguntas.length !== 1 ? 's' : ''}`;
 
-    const letras = ['A', 'B', 'C'];
+    const letras = ['A', 'B', 'C', 'D'];
 
     preguntas.forEach((pregunta, idx) => {
         const card = document.createElement('div');
