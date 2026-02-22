@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Examen B-II B | Licencia de Motocicleta</title>
+    <meta name="description"
+        content="Simulador de examen para obtener la licencia de conducir Clase B, Categoría II-a y II-b para motocicletas en Perú.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Pantalla de Inicio -->
+    <div id="pantalla-inicio" class="pantalla activa">
+        <div class="inicio-contenedor">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="40" cy="40" r="38" stroke="url(#grad1)" stroke-width="3" />
+                        <path d="M40 18C35 18 28 22 28 30C28 38 32 40 32 48H48C48 40 52 38 52 30C52 22 45 18 40 18Z"
+                            fill="url(#grad1)" />
+                        <rect x="32" y="50" width="16" height="4" rx="2" fill="url(#grad1)" />
+                        <rect x="34" y="56" width="12" height="3" rx="1.5" fill="url(#grad1)" />
+                        <defs>
+                            <linearGradient id="grad1" x1="0" y1="0" x2="80" y2="80">
+                                <stop offset="0%" stop-color="#60a5fa" />
+                                <stop offset="100%" stop-color="#a78bfa" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1>Simulador de Examen</h1>
+                <p class="subtitulo">Licencia de Conducir Clase B — Categoría II-a y II-b</p>
+                <p class="subtitulo-moto">🏍️ Motocicleta</p>
+            </div>
+
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-card-icon">📝</div>
+                    <div class="info-card-text">
+                        <strong>40 Preguntas</strong>
+                        <span>Selección aleatoria</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon">⏱️</div>
+                    <div class="info-card-text">
+                        <strong>40 Minutos</strong>
+                        <span>Tiempo límite</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-card-icon">✅</div>
+                    <div class="info-card-text">
+                        <strong>Aprobación</strong>
+                        <span>35 correctas (87.5%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inicio-botones">
+                <button id="btn-iniciar" class="btn-principal" onclick="iniciarExamen()">
+                    <span>Iniciar Examen</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7 4l8 6-8 6V4z" fill="currentColor" />
+                    </svg>
+                </button>
+                <button class="btn-secundario btn-estudio" onclick="mostrarEstudio()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 3h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"
+                            stroke="currentColor" stroke-width="1.5" fill="none" />
+                        <path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" />
+                    </svg>
+                    <span>Modo Estudio</span>
+                </button>
+            </div>
+            <p class="nota-banco">Banco de <span id="total-banco">200</span> preguntas disponibles</p>
+        </div>
+    </div>
+
+    <!-- Pantalla de Examen -->
+    <div id="pantalla-examen" class="pantalla">
+        <header class="examen-header">
+            <div class="header-izq">
+                <span class="header-titulo">Examen B-II B</span>
+                <span id="pregunta-actual-label" class="pregunta-counter">1 / 40</span>
+            </div>
+            <div class="header-centro">
+                <div id="timer" class="timer">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M9 4v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                    <span id="timer-texto">40:00</span>
+                </div>
+            </div>
+            <div class="header-der">
+                <button id="btn-terminar" class="btn-terminar" onclick="confirmarTerminar()">Terminar Examen</button>
+            </div>
+        </header>
+
+        <div class="examen-body">
+            <div class="progreso-bar">
+                <div id="progreso-fill" class="progreso-fill" style="width:2.5%"></div>
+            </div>
+
+            <div class="pregunta-contenedor">
+                <div class="pregunta-numero" id="pregunta-numero">Pregunta 1</div>
+                <p class="pregunta-texto" id="pregunta-texto"></p>
+
+                <div class="opciones-lista" id="opciones-lista">
+                    <!-- Opciones se generan dinámicamente -->
+                </div>
+            </div>
+
+            <div class="navegacion">
+                <button id="btn-anterior" class="btn-nav" onclick="preguntaAnterior()" disabled>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    Anterior
+                </button>
+                <div class="nav-dots" id="nav-dots"></div>
+                <button id="btn-siguiente" class="btn-nav" onclick="preguntaSiguiente()">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="pantalla-resultados" class="pantalla">
+        <div class="resultados-contenedor">
+            <div id="resultado-icono" class="resultado-icono">🎉</div>
+            <h2 id="resultado-titulo">¡Examen Finalizado!</h2>
+            <p id="resultado-estado" class="resultado-estado"></p>
+
+            <div class="resultado-stats">
+                <div class="stat-card correctas">
+                    <div class="stat-numero" id="stat-correctas">0</div>
+                    <div class="stat-label">Correctas</div>
+                </div>
+                <div class="stat-card incorrectas">
+                    <div class="stat-numero" id="stat-incorrectas">0</div>
+                    <div class="stat-label">Incorrectas</div>
+                </div>
+                <div class="stat-card sin-responder">
+                    <div class="stat-numero" id="stat-sin-responder">0</div>
+                    <div class="stat-label">Sin responder</div>
+                </div>
+            </div>
+
+            <div class="resultado-porcentaje">
+                <div class="circle-progress" id="circle-progress">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" class="circle-bg" />
+                        <circle cx="60" cy="60" r="54" class="circle-fg" id="circle-fg" />
+                    </svg>
+                    <span class="circle-text" id="circle-text">0%</span>
+                </div>
+            </div>
+
+            <div class="resultado-acciones">
+                <button class="btn-principal" onclick="reiniciarExamen()">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M3 9a6 6 0 1 1 1.05 3.36" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                        <path d="M3 13V9h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Nuevo Intento
+                </button>
+                <button class="btn-secundario" onclick="verRevisión()">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M2 4h14M2 9h14M2 14h9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    Revisar Respuestas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Revisión -->
+    <div id="pantalla-revision" class="pantalla">
+        <header class="examen-header revision-header">
+            <div class="header-izq">
+                <span class="header-titulo">📋 Revisión de Respuestas</span>
+            </div>
+            <div class="header-der">
+                <button class="btn-terminar" onclick="volverResultados()">← Volver a Resultados</button>
+            </div>
+        </header>
+        <div class="revision-body" id="revision-body">
+            <!-- Se genera dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Pantalla de Estudio -->
+    <div id="pantalla-estudio" class="pantalla">
+        <header class="examen-header estudio-header">
+            <div class="header-izq">
+                <span class="header-titulo">📚 Modo Estudio</span>
+                <span class="pregunta-counter" id="estudio-counter">200 preguntas</span>
+            </div>
+            <div class="header-centro">
+                <div class="estudio-buscar">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                    <input type="text" id="estudio-search" placeholder="Buscar pregunta..." oninput="filtrarEstudio()">
+                </div>
+            </div>
+            <div class="header-der">
+                <button class="btn-terminar btn-volver-inicio" onclick="volverInicio()">← Volver al Inicio</button>
+            </div>
+        </header>
+
+        <div class="estudio-toolbar">
+            <div class="estudio-filtros">
+                <button class="filtro-btn activo" data-filtro="todas" onclick="filtrarCategoria('todas', this)">📋
+                    Todas</button>
+                <button class="filtro-btn" data-filtro="con-imagen" onclick="filtrarCategoria('con-imagen', this)">🖼️
+                    Con imagen</button>
+                <button class="filtro-btn" data-filtro="sin-imagen" onclick="filtrarCategoria('sin-imagen', this)">📝
+                    Sin imagen</button>
+            </div>
+            <div class="estudio-acciones-toolbar">
+                <button class="btn-revelar-todas" id="btn-revelar-todas" onclick="toggleRevelarTodas()">👁️ Mostrar
+                    todas las respuestas</button>
+            </div>
+        </div>
+
+        <div class="estudio-body" id="estudio-body">
+            <!-- Se genera dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div id="modal-confirmar" class="modal-overlay">
+        <div class="modal-contenido">
+            <h3>⚠️ ¿Terminar el examen?</h3>
+            <p id="modal-mensaje">Aún tienes preguntas sin responder. ¿Estás seguro de que deseas terminar?</p>
+            <div class="modal-botones">
+                <button class="btn-modal-cancelar" onclick="cerrarModal()">Cancelar</button>
+                <button class="btn-modal-confirmar" onclick="terminarExamen()">Sí, terminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="preguntas.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
