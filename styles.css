@@ -1556,9 +1556,10 @@ body::after {
     }
 }
 
-.infomacion-publica {
+.informacion-publica {
     text-align: center;
     padding: 10px;
     color: var(--text-muted);
     font-size: 10px;
+
 }
