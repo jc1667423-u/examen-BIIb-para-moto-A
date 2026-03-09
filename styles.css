@@ -1288,13 +1288,6 @@ body::after {
     align-items: flex-start;
     gap: 16px;
     padding: 20px 26px;
-    cursor: pointer;
-    user-select: none;
-    transition: var(--transition);
-}
-
-.estudio-card-header:hover {
-    background: rgba(255, 255, 255, .025);
 }
 
 .estudio-card-num {
@@ -1327,78 +1320,39 @@ body::after {
     padding-top: 10px;
 }
 
-.estudio-card-badges {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    flex-shrink: 0;
-    padding-top: 10px;
-}
 
-.badge-imagen {
-    padding: 3px 9px;
-    background: rgba(251, 191, 36, .1);
-    border: 1px solid rgba(251, 191, 36, .22);
-    border-radius: 8px;
-    font-size: .68rem;
-    color: var(--accent-amber);
-    font-weight: 600;
-    letter-spacing: .3px;
-}
 
-.estudio-card-toggle {
-    min-width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, .04);
-    color: var(--text-muted);
-    transition: var(--spring);
-    flex-shrink: 0;
-    margin-top: 8px;
-}
-
-.estudio-card.abierta .estudio-card-toggle {
-    transform: rotate(180deg);
-    color: var(--accent-blue);
-    background: rgba(123, 156, 255, .1);
-}
-
-/* Contenido expandible */
 .estudio-card-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .45s cubic-bezier(.4, 0, .2, 1), padding .3s ease;
-    padding: 0 26px;
-}
-
-.estudio-card.abierta .estudio-card-body {
-    max-height: 900px;
     padding: 0 26px 26px;
 }
 
 .estudio-card-img {
     display: flex;
     justify-content: center;
-    margin-bottom: 18px;
+    padding: 0 26px 14px;
 }
 
 .estudio-card-img img {
-    max-width: 260px;
-    max-height: 210px;
+    max-width: 280px;
+    max-height: 220px;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-glass);
     object-fit: contain;
     background: rgba(255, 255, 255, .03);
     padding: 7px;
     box-shadow: var(--shadow-sm);
+    transition: var(--spring);
+}
+
+.estudio-card-img img:hover {
+    transform: scale(1.05);
+    box-shadow: var(--glow-blue), var(--shadow-md);
+    border-color: rgba(123, 156, 255, .3);
 }
 
 .estudio-opciones {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
 }
 
@@ -1594,14 +1548,17 @@ body::after {
     }
 
     .estudio-card-body {
-        padding: 0 18px;
-    }
-
-    .estudio-card.abierta .estudio-card-body {
         padding: 0 18px 18px;
     }
 
-    .estudio-card-badges {
-        display: none;
+    .estudio-opciones {
+        grid-template-columns: 1fr;
     }
+}
+
+.infomacion-publica {
+    text-align: center;
+    padding: 10px;
+    color: var(--text-muted);
+    font-size: 10px;
 }

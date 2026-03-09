@@ -405,7 +405,7 @@ function renderizarEstudio(preguntas) {
 
     preguntas.forEach((pregunta, idx) => {
         const card = document.createElement('div');
-        card.className = 'estudio-card';
+        card.className = 'estudio-card abierta';
         card.dataset.id = pregunta.id;
         card.style.animationDelay = `${Math.min(idx * 30, 600)}ms`;
 
@@ -413,12 +413,6 @@ function renderizarEstudio(preguntas) {
         let imgHTML = '';
         if (pregunta.imagen) {
             imgHTML = `<div class="estudio-card-img"><img src="${pregunta.imagen}" alt="Imagen de la pregunta" onerror="this.parentElement.innerHTML='<div class=\\'imagen-placeholder\\'>🖼️ No disponible</div>'"></div>`;
-        }
-
-        // Badge
-        let badgeHTML = '';
-        if (pregunta.imagen) {
-            badgeHTML = '<span class="badge-imagen">🖼️ Imagen</span>';
         }
 
         // Opciones
@@ -431,16 +425,12 @@ function renderizarEstudio(preguntas) {
         }).join('');
 
         card.innerHTML = `
-            <div class="estudio-card-header" onclick="toggleEstudioCard(this)">
+            <div class="estudio-card-header">
                 <div class="estudio-card-num">${pregunta.id}</div>
                 <div class="estudio-card-pregunta">${pregunta.pregunta}</div>
-                <div class="estudio-card-badges">${badgeHTML}</div>
-                <div class="estudio-card-toggle">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                </div>
             </div>
+            ${imgHTML}
             <div class="estudio-card-body">
-                ${imgHTML}
                 <div class="estudio-opciones">
                     ${opcionesHTML}
                 </div>
